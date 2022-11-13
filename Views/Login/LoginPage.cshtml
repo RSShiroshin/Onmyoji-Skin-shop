@@ -1,0 +1,55 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using PRN_Project2.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/css/LoginStyle.css">
+    
+</head>
+<body>
+    <div class="row welcome">
+        <h1 class="welcome_banner">WELCOME TO OUR SHOP</h1>
+    </div>
+    <div class="row form">
+        <div class="register">
+            <h2>Register</h2>
+            <p>if you are new to us, please regist here</p>
+            <Button style="width: 200px; height: 50px;"><a href='~/Login/Register' style="font-size: 32px">REGISTER</a></Button>
+        </div>
+
+        <div class="login">
+            <h2>Login</h2>
+            <p class="" style="color: red; font-weight: 600;">@ViewBag.errMess</p>
+
+            <form asp-action="CheckLogin" asp-controller="Login" method="get">
+                <table>
+                    <tr>
+                        <td>User:</td>
+                        <td><input type="text" name="userName"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Password:</td>
+                        <td><input type="password" name="password"></td>
+                    </tr>
+                </table> <br />
+
+                <input type="submit" value="LOGIN" style="width: 150px; height: 50px;">
+            </form>
+            <a href="#">forget your password?</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>
+

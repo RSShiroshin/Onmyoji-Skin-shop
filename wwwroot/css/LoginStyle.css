@@ -1,0 +1,80 @@
+﻿/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 21, 2022, 2:06:53 PM
+    Author     : ACER
+*/
+
+.clear {
+    clear: both;
+}
+
+
+
+.err_mess {
+    display: none;
+}
+
+    .err_mess.open {
+        display: block;
+    }
+
+body {
+    background: url(../img/login_1.png) top center / cover no-repeat;
+}
+
+.row {
+    margin-bottom: 32px;
+    height: 200px;
+}
+
+.welcome {
+    background-color: coral;
+    position: relative;
+}
+
+.welcome_banner {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.row.form {
+    text-align: center;
+    position: relative;
+    height: 400px;
+}
+
+.register {
+    position: absolute;
+    display: inline-block;
+    font-size: 24px;
+    margin-right: 16px;
+    left: 10%;
+    width: 40%;
+    height: 100%;
+    background-color: aqua;
+}
+
+table {
+    display: inline-block;
+}
+
+.login {
+    position: absolute;
+    margin-left: 16px;
+    display: inline-block;
+    text-align: center;
+    font-size: 24px;
+    width: 40%;
+    height: 100%;
+    background-color: white;
+}
+
+input {
+    /* height: 24px; */
+    font-size: 24px;
+}

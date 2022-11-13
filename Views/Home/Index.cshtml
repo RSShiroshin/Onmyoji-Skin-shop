@@ -1,0 +1,284 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using PRN_Project2.Models
+@using Microsoft.AspNetCore.Mvc;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+
+@model UserHe160324
+
+<head>
+
+    <meta charset="utf-8">
+    <!-- để fit với các thiết bị hay browser khác nhau -->
+    <meta charset="viewport" content="width=device-width, initail-scale=1.0 ">
+    <title>HE160324</title>  <!-- ./ nghĩa là ngang cấp -->
+    <!-- link đến icon trang web  -->
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/responsive.css">
+    @*<link rel="stylesheet" href="~/css/themify-icons.css">*@
+
+</head>
+
+<body>
+
+    <div id="main">
+    </div>
+
+    <div id="header">
+        <ul id="nav">
+            <!--begin Nav-->
+            <li><a href="~/Home/Index">Home</a></li>
+            <li><a href="#bestProduct">Best Seller</a></li>
+            <li><a href="#allProduct">Product</a></li>
+            <li><a href="#contact">Contact</a></li>
+
+
+            <li style="display: @ViewBag.display">
+                <a href="#">
+                    Manager
+                    <i class="nav_arrow ti-angle-down"></i>
+                </a>
+                <ul class="subnav">
+                    <li><a href="/Home/LoadUser">User Manager</a></li>
+                    <li><a href="/Home/LoadProduct">Product Manager</a></li>
+                    <li><a href="/Home/LoadOrder">Order</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!--end Nav-->
+        @if (Model != null)
+        {
+            @if (ViewBag.numberOrder > 0)
+            {
+                <p style="border-radius: 100%;background: red;padding: 1px;width: 20px;height: 20px;font-size: 14px;color: white;float: right;text-align:center; display: inline-block">                   
+                    @ViewBag.numberOrder
+                </p>
+            }
+        }
+        
+        <!--begin: search button-->
+        <div class="menu_button">
+
+            @if (Model != null)
+            {
+                <i class="nav_arrow ti-angle-down"></i> @*${sessionScope.userLogin.userName}*@ @if (Model != null)
+                {
+                    @Model.UserName
+                }
+                
+                <ul class="subnav">
+                    <li><a href="~/Home/LoadUserOrder">My Order</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="~/Home/LogOut">Logout</a></li>
+                </ul>
+            }
+            
+
+            @if (Model == null)
+            {
+                <a href="~/Login/LoginPage" style="text-decoration: none; color: white; line-height: 46px;">Login</a>
+            }
+
+
+        </div>
+        
+
+        <div class="search">
+            <form action="Search" method="post" style="height: 46px">
+                <input type="text" name="searchTxt" class="searchInput" placeholder="Search by shiki name" value="">
+                <input type="text" name="searchType" value="product" hidden>
+                <button type="submit" class="searchBtn" value="Search">Search</button>
+            </form>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu-btn">
+            <i class="menu-icon ti-menu"></i>
+        </div>
+        
+        <!--end: search button-->
+    </div>
+
+    <!-- phần content  -->
+    <div id="content">
+
+        <!--phần Best Product-->
+        <div id="bestProduct" class="content-section">
+            <div style="background: #99ffff">
+                <h2 class="section-heading">Best Seller</h2>
+                <p class="section-sub-heading">Best Product for u</p>
+            </div>
+
+
+            <div class="row member-list">
+
+
+                @foreach (ProductHe160324 p in ViewBag.listBestProduct)
+                {
+                    <div class="col col-fouth mt-32 text-center">
+
+                        <img src="@p.Img" alt="Name" class="member-img">
+                        <p>@p.ProductName</p>
+                        <p>@p.ShikiName</p>
+                        @if(p.Sale>0){
+                            <P>@(p.Price * (100 - p.Sale) / 100)$ (Sale @p.Sale %)</P>
+                        } else{
+                            <P>@p.Price$ (Sale @p.Sale %)</P>
+                        }
+                        
+                        @if (Model == null )
+                        {
+                            <Button><a href="~/Login/LoginPage">Login trc da!!</a> </Button>
+                        }
+
+                        
+                        @if (Model != null )
+                        {
+                            @if (Model.Roll == 3)
+                            {
+                                <Button><a asp-action="ProductOrder" asp-controller="Home" asp-route-productID=@p.ProductId>ORDER NOW @p.ProductId!!</a> </Button>
+                            }
+                            @if ( Model.Roll <= 1){
+                                <Button><a href="~/Home/SearchProID?searchID=@p.ProductId">EDIT</a> </Button>
+                            }
+                        }                     
+                    </div>
+                    
+                }
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <!--  phan All Product-->
+        <div id="allProduct" class="content-section">
+            <div style="background: #99ffff">
+                <h2 class="section-heading">Best Seller</h2>
+                <p class="section-sub-heading">All product</p>
+            </div>
+
+
+            <div class="row member-list">
+
+
+                @foreach (ProductHe160324 p in ViewBag.listProduct)
+                {
+                    <div class="col col-fouth mt-32 text-center">
+
+                        <img src="@p.Img" alt="Name" class="member-img">
+                        <p>@p.ProductName</p>
+                        <p>@p.ShikiName</p>
+                        @if(p.Sale>0){
+                            <P>@(p.Price * (100-p.Sale) / 100)$ (Sale @p.Sale %)</P>
+                        } else{
+                            <P>@p.Price$ (Sale @p.Sale %)</P>
+                        }
+                        <p>@p.ProductId</p>
+                        @if (Model == null)
+                        {
+                            <Button><a href="~/Login/LoginPage">Login trc da!!</a> </Button>
+                        }
+
+
+                        @if (Model != null)
+                        {
+                            @if (Model.Roll == 3)
+                            {
+                                <Button><a asp-action="ProductOrder" asp-controller="Home" asp-route-productID=@p.ProductId>ORDER NOW @p.ProductId!!</a> </Button>
+                            }
+                            @if (Model.Roll <= 1)
+                            {
+                                <Button><a href="~/Home/SearchProID?searchID=@p.ProductId">EDIT</a> </Button>
+                            }
+                        }
+                    </div>
+
+                }
+                <div class="clear"></div>
+            </div>
+        </div>
+
+    </div>
+    <!-- END phần content  -->
+
+    <script>
+        //lấy tất cả các node
+        const buyBtns = document.querySelectorAll('.js-buy-ticket')
+        //lấy ra 1 node
+        const modal = document.querySelector('.js-modal')
+        const modalClose = document.querySelector('.js-modal-close')
+        const modalContainer = document.querySelector(".js-modal-container")
+
+        //hàm hiển thị mua vé (thêm class open vào sau class modal)
+        function showBuyTickets() {
+            modal.classList.add('open')
+        }
+
+        //hàm ẩn modal mua vé (xóa class open khỏi class modal)
+        function hideBuyTickets() {
+            modal.classList.remove('open')
+        }
+
+        // lặp qua từng thẻ button và nghe hành vi click
+        // lưu lần lượt các node trong buyBtns vào biến buyBtn
+        //có danh sách mới p lặp qua
+        for (const buyBtn of buyBtns) {
+            buyBtn.addEventListener('click', showBuyTickets)
+        } //nếu click vào node này thì cái hàm showbuy... sẽ dc gọi
+        //và cái đoạn code trong hàm dc thực thi
+
+        // nghe hành vi click vào nút close-button
+        modalClose.addEventListener('click', hideBuyTickets)
+
+        modal.addEventListener('click', hideBuyTickets)
+
+        modalContainer.addEventListener('click', function (event) {
+            //từ biến event, click vào thì dừng cái nổi bọt
+            //ko bị ẩn modal đi khi ấn vào thân modal
+            event.stopPropagation()
+        })
+    </script>
+
+    <script>
+        // mobile-menu
+        var header = document.getElementById('header');
+        var mobileMenu = document.getElementById('mobile-menu');
+        // console.log(mobileMenu)
+        var headerHeight = header.clientHeight;
+
+        // đóng mở mobile menu
+        mobileMenu.onclick = function () {
+            var isClose = header.clientHeight === headerHeight;
+            if (isClose) {
+                header.style.height = 'auto';
+            } else {
+                header.style.height = null;
+            }
+        }
+
+        //tự động đóng khi chọn menu
+        var menuItems = document.querySelectorAll('#nav li a[href*="#"]');
+        for (var i = 0; i < menuItems.length; i++) {
+            var menuItem = menuItems[i];
+
+            // kiểm tra các con của thẻ đấy
+            // console.log(menuItem.nextElementSibling);
+
+            menuItem.onclick = function (event) {
+                //this ở đây là menuItem     //nếu mà có ace liền kề và ace liền kề đó chứa cái class subnav
+                var isParentMenu = this.nextElementSibling && this.nextElementSibling.classList.contains('subnav');
+                if (!isParentMenu) {
+                    header.style.height = null;
+                } else {
+                    //nếu sai thì bỏ đi hành vi mặc định của thẻ đó
+                    //ở đây alf cái thẻ a
+                    event.preventDefault();
+                }
+            }
+        }
+
+    </script>
+</body>

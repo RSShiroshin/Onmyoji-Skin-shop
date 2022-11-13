@@ -1,0 +1,88 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using PRN_Project2.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="~/css/RegisterStyle.css">
+    
+</head>
+<body>
+    <div class="RegisterForm">
+
+
+
+        <div style="background: red; display: inline-block"><a href="~/Login/LoginPage" style="color: #fff">Return to Login</a></div>
+        <h2 style="text-align: center;">Regist Form</h2>
+        <form class="regist_Form" action="Register" method="post">
+
+            <table>
+                <tr>
+                    <td>User Name:</td>
+                    <td><input type="text" name="userName" required></td>
+
+                </tr>      
+
+                <tr>
+                    <td>PassWord:</td>
+                    <td><input type="password" name="password" required > </td>
+                </tr>
+
+                <tr>
+                    <td>re-PassWord:</td>
+                    <td><input type="password" name="rePassword" required> <br /></td>
+                </tr>
+
+                <tr>
+                    <td>Gender:</td>
+                    <td>
+                        <input type="radio" value="true" name="gender" checked> Male
+                        <input type="radio" value="false" name="gender"> FeMale
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><input type="text" name="address" > </td>
+                </tr>
+                <tr>
+                    <td>Ingame ID (UID):</td>
+                    <td><input type="text" placeholder="00000000" name="ingameID" required></td>
+                </tr>               
+
+
+                <tr>
+                    <td>Ingame Name:</td>
+                    <td><input type="text" name="ingameName"></td>
+                </tr>
+
+                <tr>
+                    <td>Phone:</td>
+                    <td> <input type="tel" name="phone"> </td>
+                </tr>
+
+
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="email" name="email" required> </td>
+                </tr>
+
+                <tr>
+                    <td>Facebook:</td>
+                    <td><input type="text" name="facebook"> </td>
+                </tr>
+
+            </table>
+            <input type="submit" value="Regist" style="margin-left: 40%">
+        </form>
+
+
+    </div>
+</body>
+</html>

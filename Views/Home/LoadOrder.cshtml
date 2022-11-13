@@ -1,0 +1,249 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using PRN_Project2.Models
+@using Microsoft.AspNetCore.Mvc;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model UserHe160324
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JSP Page</title>
+    <link rel="icon" href="https://i.im.ge/2022/11/09/SM3mn4.favicon.jpg" type="image/x-icon" />
+    <link rel="stylesheet" href="~/css/LoadUserStyle.css">
+    <link rel="stylesheet" href="~/css/responsive.css">
+
+</head>
+<body>
+
+    <div id="main">
+        <!-- các thành phàn chính của web hay đặt bằng id -->
+        <!-- phàn header -->
+        <div id="header">
+            <ul id="nav">
+                <!--begin Nav-->
+                <li><a href="~/Home/Index">Home</a></li>
+                <li><a href="#bestProduct">Best Seller</a></li>
+                <li><a href="#allProduct">Product</a></li>
+                <li><a href="#contact">Contact</a></li>
+
+
+                <li style="display: @ViewBag.display">
+                    <a href="#">
+                        Manager
+                        <i class="nav_arrow ti-angle-down"></i>
+                    </a>
+                    <ul class="subnav">
+                        <li><a href="/Home/LoadUser">User Manager</a></li>
+                        <li><a href="/Home/LoadProduct">Product Manager</a></li>
+                        <li><a href="/Home/LoadOrder">Order</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--end Nav-->
+            @if (Model != null)
+            {
+                <p style="border-radius: 100%;background: red;padding: 1px;width: 20px;height: 20px;font-size: 14px;color: white;float: right;text-align:center; display: inline-block">
+                    @if (ViewBag.numberOrder > 0)
+                    {
+                        @ViewBag.numberOrder
+                    }
+                </p>
+            }
+            <!--begin: search button-->
+            <div class="menu_button">
+
+                @if (Model != null)
+                {
+                    <i class="nav_arrow ti-angle-down"></i> @*${sessionScope.userLogin.userName}*@ @if (Model != null)
+                    {
+                        @Model.UserName
+                    }  <i class="ti-user"></i>
+                    <ul class="subnav">
+                        <li><a href="~/Home/LoadUserOrder">My Order</a></li>
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="~/Home/LogOut">Logout</a></li>
+                    </ul>
+                }
+
+                @if (Model == null)
+                {
+                    <a href="~/Login/LoginPage" style="text-decoration: none; color: white; line-height: 46px;">Login</a>
+                }
+
+
+            </div>
+
+            <div class="search">
+                <form asp-controller="Home" asp-action="SearchProID" style="height: 46px">
+                    <input type="text" name="searchID" class="searchInput" placeholder="Search by productID" value="">
+                    <input type="text" name="searchType" value="product" hidden>
+                    <button type="submit" class="searchBtn" value="Search">Search</button>
+                </form>
+            </div>
+
+            <div id="mobile-menu" class="mobile-menu-btn">
+                <i class="menu-icon ti-menu"></i>
+            </div>
+            <!--end: search button-->
+        </div>
+
+        <!--phan` content-->
+        <div id="content">
+            <div class="inner_content">
+                <div class="editBtn">
+                    <button class="insert_btn js-openEditForm">Insert</button>
+                </div>
+
+                <div class="editBtn">
+                    <button class="filter_btn">Filter</button>
+
+                    <form asp-controller="Home" asp-action="SearchProID" style="height: 46px">
+                        @if (@ViewBag.searchTxt == "")
+                        {
+                            <input type="text" name="searchID" class="searchInput" placeholder="Search by productID">
+                        }
+                        @if (@ViewBag.searchTxt != "")
+                        {
+                            <input type="text" name="searchID" class="searchInput" placeholder="@ViewBag.searchTxt">
+                        }
+                        <input type="text" name="searchType" value="product" hidden>
+                        <button type="submit" class="searchBtn" value="Search">Search</button>
+                    </form>
+                </div>
+
+                <table>
+                    <tr style="text-align: center; font-weight: 900;">
+                        <td>Order ID</td>
+                            <td>user Name</td>
+                            <td>Receiver</td>
+                            <td>Product ID</td>
+                            <td>Payment Method</td>
+                            
+                            <td>Order Date</td>
+                            <td>Price</td>
+                            <td>Status</td>
+                            <td>Done?</td>  
+                    </tr>
+                    @foreach (OrderHe160324 o in ViewBag.listOrder)
+                    {
+                        @if(o.Done == true) {
+                            <tr style="text-align: center; font-weight: 900; background-color: greenyellow">
+                                <td class="@o.OrderId">@o.OrderId</td>
+                                <td class="@o.OrderId">@o.UserName</td>
+                                <td class="@o.OrderId">@o.Receiver</td>
+                                <td class="@o.OrderId">@o.ProductId</td>
+                                <td class="@o.OrderId">@(o.PaymentMethod == true ? "Bank" : "Phone Card")</td>
+
+                                <td class="@o.OrderId">@o.OrderDate</td>
+                                <td class="@o.OrderId">@o.Price</td>
+                                <td class="@o.OrderId">@(o.StatusDb == true ? "In Process" : "Delete")</td>
+                                <td class="@o.OrderId">Done</td>
+                            </tr>
+                        } else {
+                            <tr style="text-align: center; font-weight: 900;">
+                                <td class="@o.OrderId">@o.OrderId</td>
+                                <td class="@o.OrderId">@o.UserName</td>
+                                <td class="@o.OrderId">@o.Receiver</td>
+                                <td class="@o.OrderId">@o.ProductId</td>
+                                <td class="@o.OrderId">@(o.PaymentMethod == true ? "Bank" : "Phone Card")</td>
+
+                                <td class="@o.OrderId">@o.OrderDate</td>
+                                <td class="@o.OrderId">@o.Price</td>
+                                <td class="@o.OrderId">@(o.StatusDb == true ? "In Process" : "Delete")</td>
+                                <td class="@o.OrderId"><a asp-controller="Home" asp-action="UpdateOrderDone" asp-route-orderID=@o.OrderId>Not Done</a></td>
+                            </tr>
+                        }
+                        
+                    }
+                </table>
+
+            </div>
+        </div>
+        <!--KET THUC phan` content-->
+
+
+        <div class="editForm js-editForm ${open}">
+            <form class="AddProduct_Form" asp-controller="Home" asp-action="InUpProduct" enctype="multipart/form-data">
+                <input type="text" name="change" value="true" hidden>
+                <div class="editFormClose js-closeEditForm">
+                    <i class="ti-close"></i>
+                </div>
+                <h1 style="text-align: center; padding-bottom: 8px">Edit Form</h1>
+                Product ID<input type="text" name="productID" value="" class="proForm" required><br />
+                Skin Name:<input type="text" name="productName" value="" class="proForm"><br />
+                Shiki Name: <input type='text' name='shikiName' value="" class="proForm"><br />
+
+                Price: <input type='text' name='price' value="" class="proForm"><br />
+                Phone Price: <input type='text' name='phonePrice' value="" class="proForm"><br />
+                img: <input type='text' name='img' value="" class="proForm"><br />
+                description: <input type='text' name='description' value="" class="proForm"><br />
+                sale: <input type='text' name='sale' value="" class="proForm"><br />
+                <input class="js-closeEditForm" type='submit' value='Insert/Update' style="font-size: 20px;"><br />
+            </form>
+        </div>
+
+
+        <!-- phần footer  -->
+        <div id="footer">
+            <div class="social-list">
+                <a href=""><i class="ti-facebook"></i></a>
+                <a href=""><i class="ti-instagram"></i></a>
+                <a href=""><i class="ti-youtube"></i></a>
+                <a href=""><i class="ti-pinterest"></i></a>
+                <a href=""><i class="ti-twitter"></i></a>
+                <a href=""><i class="ti-linkedin"></i></a>
+            </div>
+            <p class="copyright">
+                Powered by <a href="#">Bảo Bảo Cute</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const editFormOpen = document.querySelectorAll('.js-openEditForm');
+        const editFormClose = document.querySelectorAll('.js-closeEditForm');
+        const editForm = document.querySelector('.js-editForm');
+
+
+        function update(event) {
+            const editProduct = document.getElementsByClassName(event);
+            const proForm = document.getElementsByClassName('proForm');
+
+            proForm[0].value = editProduct[0].innerHTML;
+            proForm[1].value = editProduct[1].innerHTML;
+            proForm[2].value = editProduct[2].innerHTML;
+            proForm[3].value = editProduct[3].innerHTML;
+            proForm[4].value = editProduct[4].innerHTML;
+            proForm[5].value = editProduct[5].src;
+            proForm[6].value = editProduct[6].innerHTML;
+            proForm[7].value = editProduct[8].innerHTML;
+
+            showEditForm();
+        }
+
+        for (const Btn of editFormOpen) {
+            Btn.addEventListener('click', showEditForm);
+        }
+
+        function showEditForm() {
+            editForm.classList.add('open');
+        }
+
+        for (const Btn of editFormClose) {
+            Btn.addEventListener('click', hideEditForm);
+        }
+
+        function hideEditForm() {
+            editForm.classList.remove('open');
+        }
+    </script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using PRN_Project2.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form asp-controller="Home" asp-action="getUserLogin" method="get">
+    <input type="text" name="userID" value="@ViewBag.userLogin.UserId"></input>
+    <input type="text" name="userName" value="@ViewBag.userLogin.UserName"></input>
+    <input type="text" name="password" value="@ViewBag.userLogin.Password"></input>
+    <input type="text" name="gender" value="@ViewBag.userLogin.Gender"></input>
+    <input type="text" name="adress" value="@ViewBag.userLogin.Address"></input>
+    <input type="text" name="ingameID" value="@ViewBag.userLogin.IngameId"></input>
+    <input type="text" name="ingameName" value="@ViewBag.userLogin.IngameName"></input>
+    <input type="text" name="phone" value="@ViewBag.userLogin.Phone"></input>
+    <input type="text" name="email" value="@ViewBag.userLogin.Email"></input>
+    <input type="text" name="facebook" value="@ViewBag.userLogin.Facebook"></input>
+    <input type="text" name="roll" value="@ViewBag.userLogin.Roll"></input>
+    <input type="text" name="status" value="@ViewBag.userLogin.Status"></input>
+    <input type="submit" value="Login Success" style="padding: 50px 40px; color: red; background: grey" ></input>
+</form>

@@ -1,0 +1,25 @@
+﻿/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 20, 2022, 9:16:27 PM
+    Author     : ACER
+*/
+.RegisterForm {
+    background-color: rgba(62, 168, 218, 0.7);
+    display: inline-block;
+    padding: 16px;
+    /*    float: right;*/
+}
+
+.regist_Form {
+    font-size: 24px;
+}
+
+body {
+    background: url(../img/register_2.png) top center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

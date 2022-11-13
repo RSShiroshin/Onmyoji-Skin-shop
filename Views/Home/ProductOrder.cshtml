@@ -1,0 +1,255 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using PRN_Project2.Models
+@using Microsoft.AspNetCore.Mvc;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model UserHe160324
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JSP Page</title>
+    <link rel="icon" href="./assets/css/img/favicon.jpg" type="image/x-icon" />
+    <link rel="stylesheet" href="~/css/OrderStyle2.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+    <link rel="stylesheet" href="./assets/css/fonts/themify-icons/themify-icons.css">
+
+</head>
+<body>
+
+    <div id="main">
+        <!-- các thành phàn chính của web hay đặt bằng id -->
+        <!-- phàn header -->
+        <div id="header">
+            <ul id="nav">
+                <!--begin Nav-->
+                <li><a href="~/Home/Index">Home</a></li>
+                <li><a href="#bestProduct">Best Seller</a></li>
+                <li><a href="#allProduct">Product</a></li>
+                <li><a href="#contact">Contact</a></li>
+
+
+                <li style="display: none">
+                    <a href="#">
+                        Manager
+                        <i class="nav_arrow ti-angle-down"></i>
+                    </a>
+                    <ul class="subnav">
+                        <li><a href="/Home/LoadUser">User Manager</a></li>
+                        <li><a href="/Home/LoadProduct">Product Manager</a></li>
+                        <li><a href="/Home/LoadOrder">Order</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--end Nav-->
+            @if (Model != null)
+            {
+                <p style="border-radius: 100%;background: red;padding: 1px;width: 20px;height: 20px;font-size: 14px;color: white;float: right;text-align:center; display: inline-block">
+                    @if (ViewBag.numberOrder > 0)
+                    {
+                        @ViewBag.numberOrder
+                    }
+                </p>
+            }
+            <!--begin: search button-->
+            <div class="menu_button">
+
+                @if (Model != null)
+                {
+                    <i class="nav_arrow ti-angle-down"></i> @*${sessionScope.userLogin.userName}*@ @if (Model != null)
+                    {
+                        @Model.UserName
+                    }  <i class="ti-user"></i>
+                    <ul class="subnav">
+                        <li><a href="~/Home/LoadUserOrder">My Order</a></li>
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="~/Home/LogOut">Logout</a></li>
+                    </ul>
+                }
+
+                @if (Model == null)
+                {
+                    <a href="~/Login/LoginPage" style="text-decoration: none; color: white; line-height: 46px;">Login</a>
+                }
+
+
+            </div>
+
+            <div class="search">
+                <form action="Search" method="post" style="height: 46px">
+                    <input type="text" name="searchTxt" class="searchInput" placeholder="Search by shiki name" value="">
+                    <input type="text" name="searchType" value="product" hidden>
+                    <button type="submit" class="searchBtn" value="Search">Search</button>
+                </form>
+            </div>
+
+            <div id="mobile-menu" class="mobile-menu-btn">
+                <i class="menu-icon ti-menu"></i>
+            </div>
+            <!--end: search button-->
+        </div>
+
+        <!--phan` content-->
+
+        <div id="content">
+            @if (ViewBag.productOrder != null)
+            {
+                <div class="row  orderDetail ">
+                    <div class="Product col-half pull-left text-center">
+                        <img src="@ViewBag.productOrder.Img" alt="Name" class="product-img">
+                        <p>@ViewBag.productOrder.ProductName</p>
+                        <p>@ViewBag.productOrder.ShikiName</p>
+                        <!--<P>${ProductDetail.price} (${ProductDetail.sale})</P>-->
+                    </div>
+
+                    <div class="OrderForm col-half pull-left" style="display: inline-block">
+                        <div class="ProductDes" style="margin-bottom: 16px">
+                            <h1>Product Description</h1>
+                            <p>@ViewBag.productOrder.Description</p>
+                        </div>
+
+                        <form class="" asp-controller="Home" asp-action="AddOrder" style="font-size: 20px">
+
+
+                            <h1 style="text-align: center; padding-bottom: 8px">Order Form</h1>
+                            User Name:<input type="text" name="userName" value="@Model.UserName"><br />
+                            Receiver: <input type='text' name='receiver'><br />
+
+                            <input type="text" name="productID" value="@ViewBag.productOrder.ProductId" hidden>
+
+                            Payment Method: <input type='radio' name='paymentMethod' checked value="true"> Bank($@ViewBag.productOrder.Price)
+                            <input type='radio' name='paymentMethod' value="false"> Phone Card($@ViewBag.productOrder.PhonePrice)<br />
+
+                            <input class="js-closeEditForm" type='submit' value='SUBMIT' style="font-size: 20px;"><br />
+                        </form>
+                    </div>
+                </div>
+
+                <!--Lam Sau-->
+                <div class="row comment">
+                    <div class="comment_header">
+                        <i class="ti-comment-alt"></i>
+                        &nbsp;Comment (@ViewBag.productComment.Count)
+                    </div>
+
+                    <!--neu da dang nhap thi hien thi cho comment ko thi hien vui long dang nhap-->
+                    <div class="comment_form">
+                        @if (Model == null)
+                        {
+                            <div>
+                                <a href="Login" style="text-decoration: none;line-height: 46px;padding: 8px 40px 8px 40px;
+                                        color: #fff; background: red; font-weight: 700">Login To Post Comment</a>
+                            </div>
+                        }
+
+                        @if (Model != null)
+                        {
+                            <div class="user_comment" style="position: relative">
+                                <div class="bg_comment">
+                                    <div style="float: left">
+                                        <div class="avata">
+                                            <i class="ti-user" style="font-size: 40px; color: white"></i>
+                                        </div>
+                                    </div>
+                                    <div style="float: left; padding-left: 10px; box-sizing: border-box;">
+                                        <div style="display: flex; flex-direction: column; text-align: left">
+                                            <div class="nickname">@Model.UserName</div>
+                                            <form asp-controller="Home" asp-action="postComment" method="get">
+                                                <input type="text" name="userName" value="@Model.UserName" hidden>
+                                                <input type="text" name="productID" value="@ViewBag.productOrder.ProductId" hidden>
+                                                <input type="text" name="newComment" style="width: 800px; height: 40px" placeholder="your Comment go here" required>
+                                                <input type="submit" value="POST" style="font-size: 24px; background: red; font-weight: 700; color: #fff">
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        }
+                            
+                        
+
+                    </div>
+
+                    <div class="comment_content">
+                        @foreach (CommentHe160324 c in ViewBag.productComment) {
+                            <div class="user_comment" style="position: relative">
+                                <div class="bg_comment">
+                                    <div style="float: left">
+                                        <div class="avata">
+                                            <i class="ti-user" style="font-size: 40px; color: white"></i>
+                                        </div>
+                                    </div>
+                                    <div style="float: left; padding-left: 10px; box-sizing: border-box;">
+                                        <div style="display: flex; flex-direction: column; text-align: left">
+
+                                            <div class="nickname">@c.UserName</div>
+                                            <div class="cmt">@c.Comment</div>
+                                            <div class="cmt_time">@c.CommentDate</div>
+
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        }
+                            
+                        
+                        <!--
+
+                        -->
+                    </div>
+                </div>
+            }
+            
+
+        </div>
+        <!--
+
+        <!-- phần footer  -->
+        <div class="map-section">
+            <img src="./assets/css/img/slider/2.png" alt="Map">
+        </div>
+        <div id="footer">
+            <div class="social-list">
+                <a href=""><i class="ti-facebook"></i></a>
+                <a href=""><i class="ti-instagram"></i></a>
+                <a href=""><i class="ti-youtube"></i></a>
+                <a href=""><i class="ti-pinterest"></i></a>
+                <a href=""><i class="ti-twitter"></i></a>
+                <a href=""><i class="ti-linkedin"></i></a>
+            </div>
+            <p class="copyright">
+                Powered by <a href="#">Bảo Bảo Cute</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const editFormOpen = document.querySelectorAll('.js-openEditForm');
+        const editFormClose = document.querySelectorAll('.js-closeEditForm');
+        const editForm = document.querySelector('.js-editForm');
+
+        for (const Btn of editFormOpen) {
+            Btn.addEventListener('click', showEditForm);
+        }
+
+        function showEditForm() {
+            editForm.classList.add('open');
+        }
+
+        for (const Btn of editFormClose) {
+            Btn.addEventListener('click', hideEditForm);
+        }
+
+        function hideEditForm() {
+            editForm.classList.remove('open');
+        }
+    </script>
+
+</body>
+</html>
